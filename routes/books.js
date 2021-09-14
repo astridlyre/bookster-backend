@@ -1,3 +1,4 @@
+import { seed } from "../db/seed.js";
 import { Router } from "express";
 import { Book, Review } from "../db/index.js";
 
@@ -48,5 +49,16 @@ booksRouter.get("/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+if (process.env.NODE_ENV !== "production") {
+  booksRouter.delete("/", async (req, res, next) => {
+    try {
+      await seed();
+      res.json({ response: "Reset database" });
+    } catch (error) {
+      next(error);
+    }
+  });
+}
 
 export default booksRouter;

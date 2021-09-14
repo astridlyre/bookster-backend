@@ -72,7 +72,6 @@ export async function seed() {
 export async function runSeed() {
   console.log("Seeding...");
   try {
-    await db.authenticate();
     console.log("Connection has been established");
     await seed();
   } catch (error) {

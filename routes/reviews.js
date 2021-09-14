@@ -28,8 +28,8 @@ reviewsRouter.post("/create", async (req, res, next) => {
     });
     return res.status(203).json({ review });
   } catch (error) {
-    console.log(error);
-    next(error);
+    console.log(error.stack);
+    console.log(error.message);
   }
 });
 

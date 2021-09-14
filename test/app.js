@@ -1,8 +1,7 @@
 import app from "../app.js";
 import chai from "chai";
 import chaiHttp from "chai-http";
-import { seed, testBooks, testReviews } from "../db/seed.js";
-import { beforeEach } from "mocha";
+import { seed, testBooks } from "../db/seed.js";
 
 const should = chai.should();
 chai.use(chaiHttp);
@@ -109,7 +108,6 @@ describe("Books API", function () {
       .send(review)
       .end((err, res) => {
         if (err) throw err;
-        console.log(res);
         res.should.have.status(203);
         res.body.review.should.be.a("object");
         res.body.review.content.should.eq(review.content);
