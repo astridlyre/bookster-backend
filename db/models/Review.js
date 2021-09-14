@@ -10,6 +10,10 @@ const Review = db.define("review", {
     type: seq.DataTypes.TEXT,
     allowNull: false,
   },
+  bookId: {
+    type: seq.DataTypes.INTEGER,
+    allowNull: false,
+  },
 });
 
 export default Review;

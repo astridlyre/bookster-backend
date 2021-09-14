@@ -8,12 +8,14 @@ import cors from "cors";
 import { db } from "./db/index.js";
 import { unknownEndpoint } from "./middleware/unknownEndpoint.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { limiter } from "./middleware/rateLimiter.js";
 import pingRouter from "./routes/ping.js";
 import booksRouter from "./routes/books.js";
 import reviewsRouter from "./routes/reviews.js";
 
 const app = express();
 
+app.use(limiter);
 app.use(helmet());
 app.use(cors());
 app.use(morgan("dev"));

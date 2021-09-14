@@ -5,6 +5,7 @@ const booksRouter = Router();
 
 booksRouter.get("/", async (req, res, next) => {
   try {
+    const { q } = req.query;
     const books = await Book.findAll({
       attributes: [
         "id",
@@ -18,6 +19,13 @@ booksRouter.get("/", async (req, res, next) => {
       order: [["id", "ASC"]],
     });
     if (!books) return res.status(404).json({ books: [] });
+    if (q)
+      return res.json({
+        books: books.filter(book =>
+          book.title.toLowerCase().includes(q.toLowerCase())
+        ),
+      });
+
     return res.json({ books });
   } catch (error) {
     next(error);

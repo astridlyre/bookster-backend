@@ -95,4 +95,27 @@ describe("Books API", function () {
         done();
       });
   });
+
+  it("should create a review", function (done) {
+    const review = {
+      name: "Erin Burton",
+      content: "This is a test review",
+      bookId: 2,
+    };
+    chai
+      .request(app)
+      .post("/api/reviews/create")
+      .type("json")
+      .send(review)
+      .end((err, res) => {
+        if (err) throw err;
+        console.log(res);
+        res.should.have.status(203);
+        res.body.review.should.be.a("object");
+        res.body.review.content.should.eq(review.content);
+        res.body.review.name.should.eq(review.name);
+        res.body.review.bookId.should.eq(review.bookId);
+        done();
+      });
+  });
 });
