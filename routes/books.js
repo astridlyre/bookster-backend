@@ -19,6 +19,7 @@ booksRouter.get("/", async (req, res, next) => {
       include: [{ model: Review, order: ["createdAt", "ASC"] }],
       order: [["id", "ASC"]],
     });
+
     if (!books) return res.status(404).json({ books: [] });
     if (q)
       return res.json({

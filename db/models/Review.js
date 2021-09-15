@@ -14,6 +14,10 @@ const Review = db.define("review", {
     type: seq.DataTypes.INTEGER,
     allowNull: false,
   },
+  userId: {
+    type: seq.DataTypes.INTEGER,
+    allowNull: false,
+  },
 });
 
 export default Review;

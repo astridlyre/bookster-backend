@@ -1,6 +1,7 @@
 import db from "./db.js";
 import Book from "./models/Book.js";
 import Review from "./models/Review.js";
+import User from "./models/User.js";
 
 export const testBooks = [
   {
@@ -53,19 +54,40 @@ export async function seed() {
   console.log("Database synced");
 
   const refactoring = await Book.create(testBooks[0]);
+  const erin = await User.create({
+    username: "erinburton",
+    email: "erin@buton.com",
+    password: "123456",
+    photoUrl: "",
+  });
+  const juntao = await User.create({
+    username: "juntao",
+    email: "juntao@email.com",
+    password: "123456",
+    photoUrl: "",
+  });
+
+  const reviews = [
+    {
+      name: "Erin Burton",
+      content: "This book is fantastic!",
+      userId: erin.id,
+      bookId: refactoring.id,
+    },
+    {
+      name: "Juntao Qiu",
+      content:
+        "Excellent book, very useful. I found the examples to be fun to work through, and this book just keeps inspiring me to better my code.",
+      userId: juntao.id,
+      bookId: refactoring.id,
+    },
+  ];
 
   await Promise.all(
     testBooks
       .slice(1)
       .map(book => Book.create(book))
-      .concat(
-        testReviews.map(review =>
-          Review.create({
-            ...review,
-            bookId: refactoring.id,
-          })
-        )
-      )
+      .concat(reviews.map(review => Review.create(review)))
   );
 }
 

@@ -15,21 +15,25 @@ reviewsRouter.get("/:id", async (req, res, next) => {
 
 reviewsRouter.post("/create", async (req, res, next) => {
   try {
-    const { name, content, bookId } = req.body;
-    if (!name || !content || !bookId) {
-      return res
-        .status(400)
-        .json({ error: "Name, content and bookId are required" });
+    const { id, username } = req.user;
+    if (!id || !username)
+      return res.status(401).json({ error: "Not logged in" });
+
+    const { content, bookId } = req.body;
+    if (!content || !bookId) {
+      return res.status(400).json({ error: "Content and bookId are required" });
     }
+
     const review = await Review.create({
-      name,
       content,
       bookId,
+      userId: id,
+      name: username,
     });
+
     return res.status(203).json({ review });
   } catch (error) {
-    console.log(error.stack);
-    console.log(error.message);
+    next(error);
   }
 });
 
