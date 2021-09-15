@@ -27,8 +27,6 @@ usersRouter.post("/register", async (req, res, next) => {
         .json({ error: "Password must be at least 6 characters" });
     }
 
-    console.log({ username, password, email });
-
     const newUser = await User.create({
       username,
       password,

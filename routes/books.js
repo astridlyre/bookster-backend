@@ -16,7 +16,6 @@ booksRouter.get("/", async (req, res, next) => {
         "description",
         "createdAt",
       ],
-      include: [{ model: Review, order: ["createdAt", "ASC"] }],
       order: [["id", "ASC"]],
     });
 
